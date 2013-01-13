@@ -5,7 +5,10 @@ namespace eval TestHelpers {
 
   proc storeXDGvars {} {
     variable storedXDGvars
-    set storedXDGvars {XDG_DATA_HOME {0 ""}}
+    set storedXDGvars {
+      XDG_DATA_HOME {0 ""}
+      XDG_CONFIG_HOME {0 ""}
+    }
 
     dict for {var value} $storedXDGvars {
       set varExists [info exists ::env($var)]
