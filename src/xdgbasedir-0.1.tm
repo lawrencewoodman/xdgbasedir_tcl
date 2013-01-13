@@ -12,7 +12,8 @@ namespace eval XDG {
 
   variable DEFAULTS [list \
     DATA_HOME [file join $::env(HOME) .local share] \
-    CONFIG_HOME [file join $::env(HOME) .config]
+    CONFIG_HOME [file join $::env(HOME) .config] \
+    CACHE_HOME [file join $::env(HOME) .cache]
   ]
 
   proc HOME {var default {subdir ""} } {

@@ -84,4 +84,41 @@ test CONFIG_HOME-4 {Returns default directory with subdir if XDG_CONFIG_HOME not
   TestHelpers::restoreXDGvars
 } -result [file join $::env(HOME) .config some_dir]
 
+test CACHE_HOME-1 {Returns the set XDG_CACHE_HOME directory} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_CACHE_HOME) [file join tmp xdg_cache_home]
+} -body {
+  XDG::CACHE_HOME
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [file join tmp xdg_cache_home]
+
+test CACHE_HOME-2 {Returns the set XDG_CACHE_HOME directory with subdir} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_CACHE_HOME) [file join tmp xdg_cache_home]
+} -body {
+  XDG::CACHE_HOME some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [file join tmp xdg_cache_home some_dir]
+
+test CACHE_HOME-3 {Returns default directory if XDG_CACHE_HOME not set} -setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_CACHE_HOME
+} -body {
+  XDG::CACHE_HOME
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [file join $::env(HOME) .cache]
+
+test CACHE_HOME-4 {Returns default directory with subdir if XDG_CACHE_HOME not\
+                  set but subdir passed} -setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_CACHE_HOME
+} -body {
+  XDG::CACHE_HOME some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [file join $::env(HOME) .cache some_dir]
+
 cleanupTests
