@@ -10,27 +10,24 @@
 
 namespace eval XDG {
 
-	variable DEFAULTS [list \
-		DATA_HOME [file join $::env(HOME) .local share] \
-		CONFIG_HOME [file join $::env(HOME) .config]
-	]
+  variable DEFAULTS [list \
+    DATA_HOME [file join $::env(HOME) .local share] \
+    CONFIG_HOME [file join $::env(HOME) .config]
+  ]
 
-  proc DATA_HOME { {subdir ""} } {
-		variable DEFAULTS
-    if {[info exists ::env(XDG_DATA_HOME)] && $::env(XDG_DATA_HOME) ne ""} {
-      return [file join $::env(XDG_DATA_HOME) $subdir]
-    } else {
-			return [file join [dict get $DEFAULTS DATA_HOME] $subdir]
+  proc HOME {var default {subdir ""} } {
+    set dir $default
+
+    if {[info exists ::env(XDG_$var)] && $::env(XDG_$var) ne ""} {
+      set dir $::env(XDG_$var)
     }
+
+    return [file join $dir $subdir]
   }
 
-  proc CONFIG_HOME { {subdir ""} } {
-		variable DEFAULTS
-    if {[info exists ::env(XDG_CONFIG_HOME)] && $::env(XDG_CONFIG_HOME) ne ""} {
-      return [file join $::env(XDG_CONFIG_HOME) $subdir]
-    } else {
-			return [file join [dict get $DEFAULTS CONFIG_HOME] $subdir]
-    }
+  # Create procs to access the XDG variables
+  dict for {var default} $DEFAULTS {
+    set internalCommand [regsub {^(.*_)([^_]+)$} $var {\2}]
+    proc $var { {subdir ""} } [concat $internalCommand $var $default {$subdir}]
   }
-
 }
