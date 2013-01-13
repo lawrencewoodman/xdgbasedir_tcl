@@ -16,8 +16,8 @@ namespace eval XDG {
     CACHE_HOME [file join $::env(HOME) .cache]
   ]
 
-  proc HOME {var default {subdir ""} } {
-    set dir $default
+  proc HOME {var defaultDir {subdir ""} } {
+    set dir $defaultDir
 
     if {[info exists ::env(XDG_$var)] && $::env(XDG_$var) ne ""} {
       set dir $::env(XDG_$var)

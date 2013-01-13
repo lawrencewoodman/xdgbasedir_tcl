@@ -49,21 +49,21 @@ test DATA_HOME-4 {Returns default directory with subdir if XDG_DATA_HOME not\
 
 test CONFIG_HOME-1 {Returns the set XDG_CONFIG_HOME directory} -setup {
   TestHelpers::storeXDGvars
-  set ::env(XDG_CONFIG_HOME) [file join tmp xdg_data_home]
+  set ::env(XDG_CONFIG_HOME) [file join tmp xdg_config_home]
 } -body {
   XDG::CONFIG_HOME
 } -cleanup {
   TestHelpers::restoreXDGvars
-} -result [file join tmp xdg_data_home]
+} -result [file join tmp xdg_config_home]
 
 test CONFIG_HOME-2 {Returns the set XDG_CONFIG_HOME directory with subdir} -setup {
   TestHelpers::storeXDGvars
-  set ::env(XDG_CONFIG_HOME) [file join tmp xdg_data_home]
+  set ::env(XDG_CONFIG_HOME) [file join tmp xdg_config_home]
 } -body {
   XDG::CONFIG_HOME some_dir
 } -cleanup {
   TestHelpers::restoreXDGvars
-} -result [file join tmp xdg_data_home some_dir]
+} -result [file join tmp xdg_config_home some_dir]
 
 test CONFIG_HOME-3 {Returns default directory if XDG_CONFIG_HOME not set} -setup {
   TestHelpers::storeXDGvars
