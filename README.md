@@ -2,15 +2,29 @@ xdgbasedir_tcl
 ==============
 A Tcl module to simplify access to the XDG Base Directory Specification
 
-[The XDG Base Directory Specification] (http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) aims to tidy up the files related to an application and standardize their location.
+[The XDG Base Directory Specification](http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) aims to tidy up the files related to an application and standardize their location.
 
 Requirements
 ------------
 *  Tcl 8.5+
 
-Explanation
------------
-The main advantage of using this module is that the defauls are taken care of and the module as been well tested.
+Installation
+------------
+Copy the file `xdgbasedir-*.tm` to a location that tcl expects to find modules.  This would typically be something like:
+
+  /usr/share/tcltk/tcl8.5/tcl8/
+
+To find out what directories are searched for modules, start tclsh and enter:
+
+  % foreach dir [split [::tcl::tm::path list]] {puts $dir}
+
+Module Usage
+------------
+To access the `HOME` directories you would typically specify the subdirectory that these directories will be relative to.  The subdirectory is normally the name of the application:
+
+    puts "XDG_DATA_HOME: [XDG::DATA_HOME myapp]"
+    puts "XDG_CACHE_HOME: [XDG::CACHE_HOME myapp]"
+    puts "XDG_CONFIG_HOME: [XDG::CONFIG_HOME myapp]"
 
 Testing
 -------
