@@ -16,7 +16,7 @@ Copy the file `xdgbasedir-*.tm` to a location that tcl expects to find modules. 
 
 To find out what directories are searched for modules, start tclsh and enter:
 
-    % foreach dir [split [::tcl::tm::path list]] {puts $dir}
+    foreach dir [split [::tcl::tm::path list]] {puts $dir}
 
 Module Usage
 ------------
