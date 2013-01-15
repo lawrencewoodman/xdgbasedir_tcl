@@ -12,11 +12,11 @@ Installation
 ------------
 Copy the file `xdgbasedir-*.tm` to a location that tcl expects to find modules.  This would typically be something like:
 
-  /usr/share/tcltk/tcl8.5/tcl8/
+    /usr/share/tcltk/tcl8.5/tcl8/
 
 To find out what directories are searched for modules, start tclsh and enter:
 
-  % foreach dir [split [::tcl::tm::path list]] {puts $dir}
+    % foreach dir [split [::tcl::tm::path list]] {puts $dir}
 
 Module Usage
 ------------
