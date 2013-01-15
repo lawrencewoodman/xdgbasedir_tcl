@@ -3,8 +3,8 @@ namespace import tcltest::*
 
 # Add src dir to tm paths
 set ThisScriptDir [file dirname [info script]]
-set SrcDir [file normalize [file join $ThisScriptDir .. src]]
-::tcl::tm::path add $SrcDir
+set ModuleDir [file normalize [file join $ThisScriptDir ..]]
+::tcl::tm::path add $ModuleDir
 
 package require xdgbasedir
 
