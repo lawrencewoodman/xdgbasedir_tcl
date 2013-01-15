@@ -7,6 +7,7 @@
 # For XDG Base Directory Specification
 #   http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 #
+package require Tcl 8.5
 
 namespace eval XDG {
 
