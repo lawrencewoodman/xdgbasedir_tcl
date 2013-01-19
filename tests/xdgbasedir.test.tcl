@@ -121,4 +121,88 @@ test CACHE_HOME-4 {Returns default directory with subdir if XDG_CACHE_HOME not\
   TestHelpers::restoreXDGvars
 } -result [file join $::env(HOME) .cache some_dir]
 
+test DATA_DIRS-1 {Returns the set XDG_DATA_DIRS directory} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_DATA_DIRS) [file join tmp xdg_data_dir 1]:
+  append ::env(XDG_DATA_DIRS) [file join tmp xdg_data_dir 2]
+} -body {
+  XDG::DATA_DIRS
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join tmp xdg_data_dir 1] [file join tmp xdg_data_dir 2]]
+
+test DATA_DIRS-2 {Returns the set XDG_DATA_DIRS directory with subdir} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_DATA_DIRS) [file join tmp xdg_data_dir 1]:
+  append ::env(XDG_DATA_DIRS) [file join tmp xdg_data_dir 2]
+} -body {
+  XDG::DATA_DIRS some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join tmp xdg_data_dir 1 some_dir] \
+                [file join tmp xdg_data_dir 2 some_dir]
+          ]
+
+test DATA_DIRS-3 {Returns default directory if XDG_DATA_DIRS not set} -setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_DATA_DIRS
+} -body {
+  XDG::DATA_DIRS
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join usr local share] [file join usr share]]
+
+test DATA_DIRS-4 {Returns default directory with subdir if XDG_DATA_DIRS not\
+                  set but subdir passed} -setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_DATA_DIRS
+} -body {
+  XDG::DATA_DIRS some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join usr local share some_dir] \
+                [file join usr share some_dir]
+          ]
+
+test CONFIG_DIRS-1 {Returns the set XDG_CONFIG_DIRS directory} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_CONFIG_DIRS) [file join tmp xdg_config_dir 1]:
+  append ::env(XDG_CONFIG_DIRS) [file join tmp xdg_config_dir 2]
+} -body {
+  XDG::CONFIG_DIRS
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join tmp xdg_config_dir 1] [file join tmp xdg_config_dir 2]]
+
+test CONFIG_DIRS-2 {Returns the set XDG_CONFIG_DIRS directory with subdir} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_CONFIG_DIRS) [file join tmp xdg_config_dir 1]:
+  append ::env(XDG_CONFIG_DIRS) [file join tmp xdg_config_dir 2]
+} -body {
+  XDG::CONFIG_DIRS some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join tmp xdg_config_dir 1 some_dir] \
+                [file join tmp xdg_config_dir 2 some_dir]
+          ]
+
+test CONFIG_DIRS-3 {Returns default directory if XDG_CONFIG_DIRS not set} -setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_CONFIG_DIRS
+} -body {
+  XDG::CONFIG_DIRS
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join etc xdg]]
+
+test CONFIG_DIRS-4 {Returns default directory with subdir if XDG_CONFIG_DIRS not\
+                  set but subdir passed} -setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_CONFIG_DIRS
+} -body {
+  XDG::CONFIG_DIRS some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [list [file join etc xdg some_dir]]
+
 cleanupTests
