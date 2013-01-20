@@ -26,6 +26,8 @@ Module Usage
 ------------
 To access the _XDG_ directories you would typically specify the subdirectory that these directories will be relative to.  The subdirectory is normally the name of the application:
 
+    package require xdgbasedir
+
     puts "XDG_DATA_HOME: [XDG::DATA_HOME myapp]"
     puts "XDG_CACHE_HOME: [XDG::CACHE_HOME myapp]"
     puts "XDG_CONFIG_HOME: [XDG::CONFIG_HOME myapp]"
