@@ -205,4 +205,42 @@ test CONFIG_DIRS-4 {Returns default directory with subdir if XDG_CONFIG_DIRS not
   TestHelpers::restoreXDGvars
 } -result [list [file join etc xdg some_dir]]
 
+test RUNTIME_DIR-1 {Returns the set XDG_RUNTIME_DIR directory} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_RUNTIME_DIR) [file join tmp xdg_runtime_dir]
+} -body {
+  XDG::RUNTIME_DIR
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [file join tmp xdg_runtime_dir]
+
+test RUNTIME_DIR-2 {Returns the set XDG_RUNTIME_DIR directory with subdir} -setup {
+  TestHelpers::storeXDGvars
+  set ::env(XDG_RUNTIME_DIR) [file join tmp xdg_runtime_dir]
+} -body {
+  XDG::RUNTIME_DIR some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result [file join tmp xdg_runtime_dir some_dir]
+
+test RUNTIME_DIR-3 {Returns empty directory if XDG_RUNTIME_DIR not set} \
+-setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_RUNTIME_DIR
+} -body {
+  XDG::RUNTIME_DIR
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result {}
+
+test RUNTIME_DIR-4 {Returns empty directory if XDG_RUNTIME_DIR not set but\
+                    subdir passed} -setup {
+  TestHelpers::storeXDGvars
+  TestHelpers::clearXDGvar XDG_RUNTIME_DIR
+} -body {
+  XDG::RUNTIME_DIR some_dir
+} -cleanup {
+  TestHelpers::restoreXDGvars
+} -result {}
+
 cleanupTests

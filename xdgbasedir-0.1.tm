@@ -19,11 +19,15 @@ namespace eval XDG {
     CONFIG_DIRS [list [file join etc xdg ]]
   ]
 
-  proc Home {var {subdir ""} } {
+  proc XDGVarSet {var} {
+    expr {[info exists ::env(XDG_$var)] && $::env(XDG_$var) ne ""}
+  }
+
+  proc Dir {var {subdir ""} } {
     variable DEFAULTS
     set dir [dict get $DEFAULTS $var]
 
-    if {[info exists ::env(XDG_$var)] && $::env(XDG_$var) ne ""} {
+    if {[XDGVarSet $var]} {
       set dir $::env(XDG_$var)
     }
 
@@ -34,7 +38,7 @@ namespace eval XDG {
     variable DEFAULTS
     set rawDirs [dict get $DEFAULTS $var]
 
-    if {[info exists ::env(XDG_$var)] && $::env(XDG_$var) ne ""} {
+    if {[XDGVarSet $var]} {
       set rawDirs [split $::env(XDG_$var) ":"]
     }
 
@@ -45,11 +49,16 @@ namespace eval XDG {
     return $outDirs
   }
 
-  # The following procs reference the environmental variables XDG_
+  # The remaining procs reference the environmental variables XDG_
   # followed by the proc name.
-  proc DATA_HOME {{subdir ""}} {Home DATA_HOME $subdir}
-  proc CONFIG_HOME {{subdir ""}} {Home CONFIG_HOME $subdir}
-  proc CACHE_HOME {{subdir ""}} {Home CACHE_HOME $subdir}
+  proc DATA_HOME {{subdir ""}} {Dir DATA_HOME $subdir}
+  proc CONFIG_HOME {{subdir ""}} {Dir CONFIG_HOME $subdir}
+  proc CACHE_HOME {{subdir ""}} {Dir CACHE_HOME $subdir}
+
+  proc RUNTIME_DIR {{subdir ""}} {
+    if {![XDGVarSet RUNTIME_DIR]} { return {} }
+    return [file join $::env(XDG_RUNTIME_DIR) $subdir]
+  }
 
   # The following procs returning the directories as a list with the most
   # important first.
