@@ -1,7 +1,7 @@
 package require tcltest
 namespace import tcltest::*
 
-# Add src dir to tm paths
+# Add module dir to tm paths
 set ThisScriptDir [file dirname [info script]]
 set ModuleDir [file normalize [file join $ThisScriptDir ..]]
 ::tcl::tm::path add $ModuleDir
