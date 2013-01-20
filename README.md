@@ -14,17 +14,28 @@ Copy the file `xdgbasedir-*.tm` to a location that tcl expects to find modules. 
 
     /usr/share/tcltk/tcl8.5/tcl8/
 
-To find out what directories are searched for modules, start tclsh and enter:
+To find out what directories are searched for modules, start `tclsh` and enter:
 
     foreach dir [split [::tcl::tm::path list]] {puts $dir}
 
+or from the command line:
+
+    $ echo "foreach dir [split [::tcl::tm::path list]] {puts \$dir}" | tclsh
+
 Module Usage
 ------------
-To access the `HOME` directories you would typically specify the subdirectory that these directories will be relative to.  The subdirectory is normally the name of the application:
+To access the _XDG_ directories you would typically specify the subdirectory that these directories will be relative to.  The subdirectory is normally the name of the application:
 
     puts "XDG_DATA_HOME: [XDG::DATA_HOME myapp]"
     puts "XDG_CACHE_HOME: [XDG::CACHE_HOME myapp]"
     puts "XDG_CONFIG_HOME: [XDG::CONFIG_HOME myapp]"
+
+    puts "XDG_RUNTIME_DIR: [XDG::RUNTIME_DIR myapp]"
+    puts "XDG_DATA_DIRS: [XDG::DATA_DIRS myapp]"
+    puts "XDG_CONFIG_DIRS: [XDG::CONFIG_DIRS myapp]"
+
+The XDG procs ending in `_DIRS` return a list of directories in order of preference.
+
 
 Testing
 -------
