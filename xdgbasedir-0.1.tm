@@ -65,5 +65,6 @@ namespace eval XDG {
   proc DATA_DIRS {{subdir ""}} {Dirs DATA_DIRS $subdir}
   proc CONFIG_DIRS {{subdir ""}} {Dirs CONFIG_DIRS $subdir}
 
-  namespace export DATA_HOME CONFIG_HOME CACHE_HOME DATA_DIRS CONFIG_DIRS
+  namespace export DATA_HOME CONFIG_HOME CACHE_HOME
+  namespace export RUNTIME_DIR DATA_DIRS CONFIG_DIRS
 }
