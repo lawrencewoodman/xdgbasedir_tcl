@@ -10,17 +10,21 @@
 package require Tcl 8.5
 
 namespace eval XDG {
+  variable DEFAULTS ""
+  namespace export DATA_HOME CONFIG_HOME CACHE_HOME
+  namespace export RUNTIME_DIR DATA_DIRS CONFIG_DIRS
+}
 
-  variable DEFAULTS [list \
+proc XDG::SetDefaults {} {
+  variable DEFAULTS
+  if {$DEFAULTS ne ""} return
+  set DEFAULTS [list \
     DATA_HOME   [file join $::env(HOME) .local share] \
     CONFIG_HOME [file join $::env(HOME) .config] \
     CACHE_HOME  [file join $::env(HOME) .cache] \
     DATA_DIRS   [list [file join usr local share] [file join usr share]] \
     CONFIG_DIRS [list [file join etc xdg ]]
   ]
-
-  namespace export DATA_HOME CONFIG_HOME CACHE_HOME
-  namespace export RUNTIME_DIR DATA_DIRS CONFIG_DIRS
 }
 
 proc XDG::XDGVarSet {var} {
@@ -29,6 +33,7 @@ proc XDG::XDGVarSet {var} {
 
 proc XDG::Dir {var {subdir ""} } {
   variable DEFAULTS
+  SetDefaults
   set dir [dict get $DEFAULTS $var]
 
   if {[XDGVarSet $var]} {
@@ -40,6 +45,7 @@ proc XDG::Dir {var {subdir ""} } {
 
 proc XDG::Dirs {var {subdir ""} } {
   variable DEFAULTS
+  SetDefaults
   set rawDirs [dict get $DEFAULTS $var]
 
   if {[XDGVarSet $var]} {
