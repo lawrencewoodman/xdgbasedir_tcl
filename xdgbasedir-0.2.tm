@@ -22,8 +22,8 @@ proc XDG::SetDefaults {} {
     DATA_HOME   [file join $::env(HOME) .local share] \
     CONFIG_HOME [file join $::env(HOME) .config] \
     CACHE_HOME  [file join $::env(HOME) .cache] \
-    DATA_DIRS   [list [file join usr local share] [file join usr share]] \
-    CONFIG_DIRS [list [file join etc xdg ]]
+    DATA_DIRS   [list [file join /usr local share] [file join /usr share]] \
+    CONFIG_DIRS [list [file join /etc xdg ]]
   ]
 }
 
